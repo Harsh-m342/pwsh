@@ -1,0 +1,75 @@
+Powershell to revolutionize the world of system management and command-line shells.
+> object-base pipelines to its admin focus to its enormous reach into other microsoft management tech
+> pshell work with std windows commands and applications.
+> cmdlets(pshell commands) syntax: verb-noun 
+> understands objects.
+> supports discovery
+> scripting.
+> u can work with .NET, COM, WMI, XML and AD.
+
+Open powershell: 
+cmd -> powershell
+run -> powershell
+
+once u open the shell u can eneter DOS style or Unix style shell.
+for example pushd, cd, dir, pwd and popd
+* function Prompt {"PS > "}
+in cmd it is $P$G in bash it PS1="[\h] \w>"
+
+You write a function in pshell that returns whatever you want displayed.
+
+pushd is alias which is used to push current location
+
+try out ipconfig and
+
+#Structured Commands(Cmdlets)
+verb-noun such as Get-Process and Get-Content and Stop-process
+u can use tab completion
+pshell defines aliases for common cmdlets
+for example gps -n lsass
+positional parameter is also supported.
+
+supports object integration
+for example "hello world".Length
+
+NOTE:  all pshell commands that produce output generated that output as objects as well.
+for eg: the gps cmdlet generated a System.Diagnostics.Process object
+var name starts with $
+
+$process = Get-Process notepad
+$process.kill() {you can call the kill() method whic stops a process}
+
+## Admin as first-class Users
+pshell supports MB and GB as some of its standard admin constants. 
+for eg how many disks will it take to back up a 40gb hard drive to cd-rom
+40Gb/650MB
+
+> .NET framework is traditionally a develp platform
+use pshell as a calendar
+[DateTime]::IsLeapYear(2008)
+
+how much time remains untill summer?
+$result = [DateTime] "06/21/2011" - [DateTime]::Now
+
+##Composable Commands:
+use of pipeline character(|)
+for eg
+Get-Item Path\* | Move-Item -Destination Path2
+
+#get process and srt it by handles and then generate a table
+Get-Process | Where-Object { $_.Handles -ge 500} | Sort-Object Handles | Format-Table Handles,Name,Description -Auto
+
+#if unsure about any command pshell has -WhatIf and -Confirm parameters that let u see what command does
+# u can use get-command to descover commands matching ur text
+and get help on it using get-help get-process
+
+#u can use get-member on .NET objects to retrieve info about the properties and methods of object
+"Hello world" | Get-Member
+
+>>Ubiquitous scripting
+foreach ($process in Get-Process) { $handleC += $process.Handles }
+
+# using .NET framework to retrieve a web page and process its content
+$webclient = New-Object System.Net.WebClient
+$content = $webClient.DownloadString("https://gmail.com")
+$content.Substring(0,1000)
